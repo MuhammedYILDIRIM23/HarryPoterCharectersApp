@@ -28,10 +28,7 @@ class TeamViewController: UIViewController{
         print("yedek kadro: \(coreData.teamSpareArray)")
 
     }
-    // sourctree deneme
-    // Souretree Deneme2
-    // Souretree Deneme3
-    // Souretree Deneme4
+ 
 
     @objc func teamAdd() {
         self.navigationController?.popToRootViewController(animated: true)
