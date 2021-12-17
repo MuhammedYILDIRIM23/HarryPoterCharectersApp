@@ -11,10 +11,13 @@ import CoreData
 class TeamViewController: UIViewController{
     
     private var coreData: CoreData = CoreData()
+    private var detailVC: DetailViewController = DetailViewController()
+
+    @IBOutlet weak var tableView: UITableView!
     
     let titleArray: [String] = ["KALECİ", "DEFANS OYUNCULARI", "ORTA SAHA OYUNCULARI","FORVET OYUNCULARI","YEDEK OYUNCULARI"]
-    
-    @IBOutlet weak var tableView: UITableView!
+    var teamArrayCount: [String] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,16 +25,31 @@ class TeamViewController: UIViewController{
         tableView.dataSource = self
         
         coreData.getTeamData()
+        teamArrayCount = coreData.teamKaleciArray + coreData.teamDefansArray + coreData.teamOrtaSahaArray + coreData.teamForvetArray
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(teamAdd))
 
         print("-------------------------------------------------------------------------------------------------------------------------------------------------------------")
         print("yedek kadro: \(coreData.teamSpareArray)")
 
     }
-    // sourceTree
-
+    
     @objc func teamAdd() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if teamArrayCount.count < 11 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            addAlert()
+        }
+        
+    }
+    func addAlert() {
+        let alert = UIAlertController(title: "As Takım dolmuştur", message: "Yedek kadroya eklemek istermisin?", preferredStyle: .alert)
+        let yesButton = UIAlertAction(title: "Evet", style: .default) { UIAlertAction  in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        let noButton = UIAlertAction(title: "Hayır", style: .cancel, handler: nil)
+        alert.addAction(yesButton)
+        alert.addAction(noButton)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }

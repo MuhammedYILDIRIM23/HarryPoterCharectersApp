@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+// MARK: PROTOCOL
 protocol FavoriteProtocol: AnyObject {
     func Upload(_ controller: DetailViewController, with item: Array<String>)
 }
@@ -25,9 +25,8 @@ class DetailViewController: UIViewController {
     
     private(set) var characterModel: CharactersViewModel!
     private var coreData: CoreData = CoreData()
-    weak var delegate: FavoriteProtocol?
+    weak var delegate: FavoriteProtocol?    // <------------------ MARK: Delegate
     
-    var teamArrayCount: Int = 0
     var teamArrayName: [String] = []
     
     override func viewDidLoad() {
@@ -36,7 +35,6 @@ class DetailViewController: UIViewController {
         
         coreData.getData()
         coreData.getTeamData()
-        teamArrayCount = coreData.teamKaleciArray.count + coreData.teamDefansArray.count + coreData.teamOrtaSahaArray.count + coreData.teamForvetArray.count
         teamArrayName = coreData.teamKaleciArray + coreData.teamDefansArray + coreData.teamOrtaSahaArray + coreData.teamForvetArray
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Takıma Ekle", style: .plain, target: self, action: #selector(detailTeamAdd))
      
@@ -98,7 +96,7 @@ class DetailViewController: UIViewController {
     func alert() {
         let alert = UIAlertController(title: "Oyuncunun Mevkisini Seç", message: nil, preferredStyle: .actionSheet)
         let kaleciButton = UIAlertAction(title: "Kaleci", style: .default) { [self] UIAlertAction in
-            if teamArrayCount < 11 {
+            if teamArrayName.count < 11 {
                 if teamArrayName.contains(detailNameLabel.text!)  {
                 } else {
                     coreData.saveTeamKaleciData(inputName: detailNameLabel.text!)
@@ -110,7 +108,7 @@ class DetailViewController: UIViewController {
             performSegue(withIdentifier: IdentifierConstanst.teamIdentifier, sender: nil)
         }
         let defansButton = UIAlertAction(title: "Defans", style: .default) { [self] UIAlertAction in
-            if teamArrayCount < 11 {
+            if teamArrayName.count < 11 {
                 if teamArrayName.contains(detailNameLabel.text!)  {
                 } else {
                     coreData.saveTeamDefansData(inputName: detailNameLabel.text!)
@@ -122,7 +120,7 @@ class DetailViewController: UIViewController {
             performSegue(withIdentifier: IdentifierConstanst.teamIdentifier, sender: nil)
         }
         let ortaSahaButton = UIAlertAction(title: "Orta Saha", style: .default) { [self] UIAlertAction in
-            if teamArrayCount < 11 {
+            if teamArrayName.count < 11 {
                 if teamArrayName.contains(detailNameLabel.text!)  {
                 } else {
                     coreData.saveTeamOrtaSahaData(inputName: detailNameLabel.text!)
@@ -134,7 +132,7 @@ class DetailViewController: UIViewController {
             performSegue(withIdentifier: IdentifierConstanst.teamIdentifier, sender: nil)
         }
         let forvetButton = UIAlertAction(title: "Forvet", style: .default) { [self] UIAlertAction in
-            if teamArrayCount < 11 {
+            if teamArrayName.count < 11 {
                 if teamArrayName.contains(detailNameLabel.text!)  {
                 } else {
                     coreData.saveTeamForverData(inputName: detailNameLabel.text!)
@@ -155,8 +153,8 @@ class DetailViewController: UIViewController {
             
     }
     
-    func newCoreDataTeam(save:() ) {
-        if teamArrayCount < 11 {
+    private func newCoreDataTeam(save:() ) {
+        if teamArrayName.count < 11 {
             if teamArrayName.contains(detailNameLabel.text!)  {
                 print("aynı oyuncu kadroya 2 kere giremez.")
             } else {
@@ -168,32 +166,8 @@ class DetailViewController: UIViewController {
             print("Takım dolu error bloğu çalıştı")
         }
     }
-    
-    
-    
-    /*
-    func coreDataTeam(array: Array<String>) {
-        if self.coreData.array.count < 11 {
-            if self.coreData.teamArray.isEmpty {
-                self.coreData.saveTeamData(inputName: self.detailNameLabel.text!)
-                print("boş dizi içerisnde ki blok çalıştı")
-            } else {
-                if self.coreData.teamArray.contains(self.detailNameLabel.text!) {
-                    print("aynı oyuncu kadroya 2 kere giremez.")
-                } else {
-                    self.coreData.saveTeamData(inputName: self.detailNameLabel.text!)
-                    print("başarılı bir şekilde kaydedildi.")
-                }
-            }
-        } else {
-            self.teamFullAlert()
-            print("Takım dolu error")
-        }
-    }
-     */
-    
-    
-    func coreDataTeamSpare() {
+
+    private func coreDataTeamSpare() {
         if self.coreData.teamSpareArray.count < 5 {
             if teamArrayName.contains(self.detailNameLabel.text!) {
                 print("bu oyuncu as kadroda bulunmakta.")

@@ -11,6 +11,7 @@ import CoreData
 
 class ViewController: UIViewController, FavoriteProtocol {
     
+    // MARK: Protocol
     func Upload(_ controller: DetailViewController, with item: Array<String>) {
         coreData.getData()
         tableView.reloadData()
@@ -28,7 +29,7 @@ class ViewController: UIViewController, FavoriteProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailVC.delegate = self    //  <------------------------------------------------------ delegate
+        detailVC.delegate = self    //  <------------------------------------------------------ MARK: Delegate
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -113,7 +114,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == IdentifierConstanst.detailIdentifier, let model = sender as?  CharactersViewModel {
             let destinationVC = segue.destination as! DetailViewController
             destinationVC.setCharaterModel(model: model)
-            destinationVC.delegate = self   // <--------------------------delegate
+            destinationVC.delegate = self   // <-------------------------- MARK: Delegate
         }
     }
     
