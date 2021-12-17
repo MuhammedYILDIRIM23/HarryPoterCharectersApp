@@ -12,7 +12,7 @@ import CoreData
 class ViewController: UIViewController, FavoriteProtocol {
     
     // MARK: Protocol
-    func Upload(_ controller: DetailViewController, with item: Array<String>) {
+    func upload() {
         coreData.getData()
         tableView.reloadData()
     }
@@ -28,8 +28,6 @@ class ViewController: UIViewController, FavoriteProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        detailVC.delegate = self    //  <------------------------------------------------------ MARK: Delegate
         
         tableView.delegate = self
         tableView.dataSource = self

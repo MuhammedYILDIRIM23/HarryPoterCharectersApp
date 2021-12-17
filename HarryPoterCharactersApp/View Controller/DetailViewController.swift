@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: PROTOCOL
 protocol FavoriteProtocol: AnyObject {
-    func Upload(_ controller: DetailViewController, with item: Array<String>)
+    func upload()
 }
 
 
@@ -28,6 +28,7 @@ class DetailViewController: UIViewController {
     weak var delegate: FavoriteProtocol?    // <------------------ MARK: Delegate
     
     var teamArrayName: [String] = []
+    var isFavorite: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +53,12 @@ class DetailViewController: UIViewController {
             
         }
         
+       
+ 
       
     }
+    
+
     
     func setCharaterModel(model: CharactersViewModel) {
         characterModel = model

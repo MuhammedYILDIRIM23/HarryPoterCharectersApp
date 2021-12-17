@@ -21,6 +21,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.dataSource = self
         
         coreData.getData()
+        
+        
 
     }
     
